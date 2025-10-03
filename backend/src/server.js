@@ -1,5 +1,6 @@
 import { response } from "express";
 import express from "express";
+import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 import path from "path";
@@ -22,15 +23,12 @@ if (process.env.NODE_ENV !== "production") {
     })
   );
 }
-app.use(express.json()); // this middleware will parse JSON bodies: req.body
-//app.use(rateLimiter);
 
 connectDB();
 
 app.use(express.json());
 
 app.use("/api/notes", noteRoutes);
-
 app.use("/api/users", userRoutes);
 
 if (process.env.NODE_ENV === "production") {
