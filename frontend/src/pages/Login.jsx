@@ -6,8 +6,9 @@ import api from "../lib/axios";
 import toast from "react-hot-toast";
 import NoteCard from "../components/NoteCard";
 import NotesNotFound from "../components/NotesNotFound";
+//import { Login } from "lucide-react";
 
-const Registration = () => {
+const Login = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -26,17 +27,17 @@ const Registration = () => {
     setLoading(true);
 
     try {
-      const res = await api.post("/users/register", formData); // adjust endpoint if needed
+      const res = await api.post("/users/login", formData); // adjust endpoint if needed
 
       if (res.status === 201 || res.status === 200) {
-        toast.success("Registration successful!");
+        toast.success("Login successful!");
         setFormData({ username: "", password: "" }); // reset form
       } else {
         toast.error(res.data?.message || "Something went wrong.");
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      toast.error(error.response?.data?.message || "Failed to register user.");
+      console.error("Login error:", error);
+      toast.error(error.response?.data?.message || "Failed to login user.");
     } finally {
       setLoading(false);
     }
@@ -47,7 +48,7 @@ const Registration = () => {
       <Navbar />
 
       <div className="max-w-7xl mx-auto p-4 mt-6">
-        <h2>Register</h2>
+        <h2>Login</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"
@@ -74,11 +75,11 @@ const Registration = () => {
             className="btn btn-primary w-full"
             disabled={loading}
           >
-            {loading ? "Registering..." : "Register"}
+            {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
       </div>
     </div>
   );
 };
-export default Registration;
+export default Login;
