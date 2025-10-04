@@ -1,18 +1,14 @@
 import { useState } from "react";
-import Navbar from "../components/Navbar";
-import RateLimitedUI from "../components/RateLimitedUI";
-import { useEffect } from "react";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
-import NoteCard from "../components/NoteCard";
-import NotesNotFound from "../components/NotesNotFound";
-
+import { useNavigate } from "react-router";
 const Registration = () => {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -31,6 +27,7 @@ const Registration = () => {
       if (res.status === 201 || res.status === 200) {
         toast.success("Registration successful!");
         setFormData({ username: "", password: "" }); // reset form
+        navigate("/login");
       } else {
         toast.error(res.data?.message || "Something went wrong.");
       }
@@ -44,8 +41,6 @@ const Registration = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       <div className="max-w-7xl mx-auto p-4 mt-6">
         <h2>Register</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -77,6 +72,21 @@ const Registration = () => {
             {loading ? "Registering..." : "Register"}
           </button>
         </form>
+        <div style={{ marginTop: "15px", textAlign: "center" }}>
+          <p style={{ color: "#666" }}>
+            Already have an account?{" "}
+            <span
+              onClick={() => navigate("/login")}
+              style={{
+                color: "#007bff",
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+            >
+              Click here to login
+            </span>
+          </p>
+        </div>
       </div>
     </div>
   );
