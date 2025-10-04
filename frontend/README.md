@@ -56,6 +56,16 @@ backend/
 
 ---
 
+## User Stories
+
+1. **As a user**, I want to browse different categories of musical instruments, so that I can easily find the instruments I’m interested in.
+
+2. **As a user**, I want to add questions related to instruments into different categories, so that I can organize my learning and get answers efficiently.
+
+3. **As a user**, I want to view answers to the questions in each category, so that I can understand more about each instrument and its use.
+
+4. **As a user**, I want to search for specific instruments or topics, so that I can quickly find relevant information without browsing through all categories.
+
 ## Future Improvements
 
 - Real-time notifications for new questions or answers
