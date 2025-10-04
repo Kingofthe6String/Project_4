@@ -1,187 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router";
-
-const styles = {
-  page: {
-    display: "flex",
-    minHeight: "100vh",
-    fontFamily:
-      "Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial",
-    backgroundColor: "#f7f8fb",
-    color: "#222",
-  },
-  sidebar: {
-    width: 250,
-    backgroundColor: "#ffffff",
-    padding: 20,
-    borderRight: "1px solid #e6e9ef",
-  },
-  sidebarHeading: {
-    fontSize: 18,
-    fontWeight: 700,
-    marginBottom: 12,
-    color: "#2c3e50",
-  },
-  sideNav: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 10,
-    marginTop: 12,
-  },
-  categoryButton: (isSelected) => ({
-    padding: "12px",
-    textAlign: "left",
-    backgroundColor: isSelected ? "#1f6feb" : "white",
-    color: isSelected ? "white" : "#333",
-    border: "1px solid #e0e0e0",
-    borderRadius: 6,
-    cursor: "pointer",
-    fontWeight: isSelected ? 700 : 500,
-    transition: "all 0.12s ease",
-  }),
-  main: {
-    flex: 1,
-    padding: 36,
-    maxWidth: "100%",
-  },
-  topRow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    marginBottom: 18,
-    width: "100%",
-  },
-  topThreeCols: {
-    display: "flex",
-    width: "100%",
-    gap: 12,
-    alignItems: "center",
-  },
-  topColLeft: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "flex-start",
-  },
-  topColCenter: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "center",
-  },
-  topColRight: {
-    flex: 1,
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  logoutButton: {
-    padding: "10px 18px",
-    backgroundColor: "#e65050",
-    color: "white",
-    border: "none",
-    borderRadius: 6,
-    cursor: "pointer",
-    fontWeight: 600,
-  },
-  title: {
-    fontSize: 22,
-    fontWeight: 800,
-    color: "#111827",
-    letterSpacing: "-0.4px",
-  },
-  greeting: {
-    fontSize: 16,
-    fontWeight: 600,
-    color: "#374151",
-  },
-  dashboardHeadingRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginTop: 14,
-    marginBottom: 8,
-  },
-  createBtn: {
-    padding: "10px 18px",
-    backgroundColor: "#16a34a",
-    color: "white",
-    border: "none",
-    borderRadius: 6,
-    cursor: "pointer",
-    fontWeight: 600,
-  },
-  smallMuted: {
-    color: "#6b7280",
-    marginBottom: 18,
-  },
-  createFormCard: {
-    padding: 20,
-    backgroundColor: "white",
-    borderRadius: 10,
-    marginBottom: 26,
-    border: "1px solid #e5e7eb",
-  },
-  formLabel: {
-    display: "block",
-    marginBottom: 6,
-    fontWeight: 600,
-    color: "#111827",
-  },
-  input: {
-    width: "100%",
-    padding: "10px 12px",
-    borderRadius: 8,
-    border: "1px solid #e6e9ef",
-    marginBottom: 12,
-    outline: "none",
-    fontSize: 14,
-  },
-  textarea: {
-    width: "100%",
-    minHeight: 110,
-    padding: "10px 12px",
-    borderRadius: 8,
-    border: "1px solid #e6e9ef",
-    fontSize: 14,
-    outline: "none",
-  },
-  submitBtn: {
-    padding: "10px 18px",
-    backgroundColor: "#2563eb",
-    color: "white",
-    border: "none",
-    borderRadius: 8,
-    cursor: "pointer",
-    fontWeight: 700,
-  },
-  questionsList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 18,
-  },
-  questionCard: (isHovered) => ({
-    padding: 18,
-    borderRadius: 10,
-    border: "1px solid #e6e9ef",
-    backgroundColor: "white",
-    boxShadow: isHovered
-      ? "0 8px 24px rgba(16,24,40,0.08)"
-      : "0 1px 2px rgba(16,24,40,0.04)",
-    transform: isHovered ? "translateY(-4px)" : "translateY(0)",
-    transition: "transform 0.18s ease, box-shadow 0.18s ease",
-    cursor: "pointer",
-  }),
-  metaRow: {
-    display: "flex",
-    gap: 12,
-    alignItems: "center",
-    marginTop: 8,
-    fontSize: 13,
-    color: "#6b7280",
-  },
-};
+import "../../styles.css";
 
 function CategoryButton({ name, isSelected, onClick }) {
   return (
-    <button onClick={onClick} style={styles.categoryButton(isSelected)}>
+    <button
+      type="button"
+      className={`category-btn ${isSelected ? "selected" : ""}`}
+      onClick={onClick}
+    >
       {name}
     </button>
   );
@@ -192,23 +19,29 @@ function QuestionCard({ question, onOpen, isHovered, onEnter, onLeave }) {
   const answered = !!question.answered;
 
   return (
-    <div
-      onClick={() => onOpen(question._id)}
-      onMouseEnter={() => onEnter(question._id)}
-      onMouseLeave={() => onLeave()}
-      style={styles.questionCard(isHovered)}
+    <article
+      className={`question-card ${isHovered ? "hovered" : ""}`}
+      onClick={() => onOpen(question._id || question.id)}
+      onMouseEnter={() => onEnter(question._id || question.id)}
+      onMouseLeave={onLeave}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === "Enter") onOpen(question._id || question.id);
+      }}
     >
       <h3 style={{ margin: 0 }}>{question.title}</h3>
-      <p style={{ color: "#4b5563", marginTop: 8 }}>{question.body}</p>
-
-      <div style={styles.metaRow}>
+      <p className="question-body" style={{ marginTop: 8, color: "#4b5563" }}>
+        {question.body}
+      </p>
+      <div className="meta-row" aria-hidden>
         <div>
           {answered ? (
             <span style={{ color: "#059669", fontWeight: 700 }}>✓</span>
           ) : (
             <span style={{ color: "#dc2626", fontWeight: 700 }}>✗</span>
-          )}{" "}
-          <span style={{ marginLeft: 6, color: "#4b5563", fontWeight: 600 }}>
+          )}
+          <span style={{ marginLeft: 8, color: "#4b5563", fontWeight: 600 }}>
             {answered ? `${answersCount} answer(s)` : "Not answered yet"}
           </span>
         </div>
@@ -216,13 +49,12 @@ function QuestionCard({ question, onOpen, isHovered, onEnter, onLeave }) {
           {question.categoryName || question.category || ""}
         </div>
       </div>
-    </div>
+    </article>
   );
 }
 
 export default function Dashboard() {
   const navigate = useNavigate();
-
   const [categories, setCategories] = useState([]);
   const [questions, setQuestions] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -233,335 +65,259 @@ export default function Dashboard() {
     body: "",
     category: "",
   });
-
   const [hoveredQuestionId, setHoveredQuestionId] = useState(null);
+  const [loadingCategories, setLoadingCategories] = useState(false);
+  const [loadingQuestions, setLoadingQuestions] = useState(false);
 
-  useEffect(() => {
+  const getId = (item) => item?._id ?? item?.id ?? item;
+
+  const fetchCategories = useCallback(async () => {
+    setLoadingCategories(true);
     try {
-      const storedUsername = localStorage.getItem("username");
-      if (storedUsername) {
-        setUsername(storedUsername);
-      }
-    } catch (err) {
-      console.error("Error reading username from localStorage:", err);
+      const res = await fetch("http://localhost:5001/api/categories");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      setCategories(Array.isArray(data) ? data : []);
+    } catch {
+      setCategories([]);
+    } finally {
+      setLoadingCategories(false);
     }
   }, []);
 
-  useEffect(() => {
-    let mounted = true;
-    fetch("http://localhost:5001/api/categories")
-      .then((res) => {
-        if (!res.ok)
-          throw new Error(`Failed to fetch categories: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (!mounted) return;
-
-        const normalized = Array.isArray(data) ? data : [];
-        setCategories(normalized);
-      })
-      .catch((err) => {
-        console.error("Error fetching categories:", err);
-        setCategories([]);
+  const fetchQuestions = useCallback(async () => {
+    setLoadingQuestions(true);
+    try {
+      const res = await fetch("http://localhost:5001/api/questions");
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const normalized = Array.isArray(data) ? data : [];
+      const withCategoryNames = normalized.map((q) => {
+        const catId = q.category ?? q.categoryId ?? null;
+        const cat = categories.find((c) => getId(c) === catId);
+        return { ...q, categoryName: cat?.name ?? q.categoryName ?? "" };
       });
+      setQuestions(withCategoryNames);
+    } catch {
+      setQuestions([]);
+    } finally {
+      setLoadingQuestions(false);
+    }
+  }, [categories]);
 
-    return () => {
-      mounted = false;
-    };
+  useEffect(() => {
+    const stored = localStorage.getItem("username");
+    if (stored) setUsername(stored);
   }, []);
 
   useEffect(() => {
-    let mounted = true;
-    fetch("http://localhost:5001/api/questions")
-      .then((res) => {
-        if (!res.ok)
-          throw new Error(`Failed to fetch questions: ${res.status}`);
-        return res.json();
-      })
-      .then((data) => {
-        if (!mounted) return;
-        const normalized = Array.isArray(data) ? data : [];
-        setQuestions(normalized);
-      })
-      .catch((err) => {
-        console.error("Error fetching questions:", err);
-        setQuestions([]);
-      });
+    fetchCategories();
+  }, [fetchCategories]);
 
-    return () => {
-      mounted = false;
-    };
-  }, []);
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
 
   const handleLogout = () => {
-    try {
-      localStorage.removeItem("username");
-    } catch (err) {
-      console.warn("Could not remove username from localStorage:", err);
-    }
+    localStorage.removeItem("username");
     navigate("/login");
   };
 
   const handleCreateQuestion = async (e) => {
     e.preventDefault();
-
     if (
       !newQuestion.title.trim() ||
       !newQuestion.body.trim() ||
       !newQuestion.category
     ) {
-      alert("Please complete all fields (title, category, details).");
+      alert("Please fill in Title, Category and Details.");
       return;
     }
-
     try {
-      const response = await fetch("http://localhost:5001/api/questions", {
+      const res = await fetch("http://localhost:5001/api/questions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newQuestion),
       });
-
-      if (!response.ok) {
-        const text = await response.text();
-        throw new Error(
-          `Failed to create question: ${response.status} ${text}`
-        );
-      }
-
-      const updatedQuestions = await fetch(
-        "http://localhost:5001/api/questions"
-      ).then((res) => res.json());
-
-      setQuestions(Array.isArray(updatedQuestions) ? updatedQuestions : []);
-
+      if (!res.ok) throw new Error();
+      await fetchQuestions();
       setNewQuestion({ title: "", body: "", category: "" });
       setShowCreateForm(false);
-    } catch (err) {
-      console.error("Error creating question:", err);
-      alert(
-        "There was an issue creating your question. Check console for details."
-      );
+    } catch {
+      alert("There was a problem creating the question.");
     }
   };
 
   const filteredQuestions = selectedCategory
     ? questions.filter((q) => {
-        const catId = q.category || q.categoryId;
+        const catId = getId(q.category) ?? q.categoryId ?? null;
         return catId === selectedCategory;
       })
     : questions;
 
-  const handleCardEnter = (id) => {
-    setHoveredQuestionId(id);
-  };
-  const handleCardLeave = () => {
-    setHoveredQuestionId(null);
-  };
-
-  const openQuestion = (id) => {
-    if (!id) return;
-
-    navigate(`/questions/${id}`);
-  };
+  const handleCardEnter = (id) => setHoveredQuestionId(id);
+  const handleCardLeave = () => setHoveredQuestionId(null);
+  const openQuestion = (id) => navigate(`/questions/${id}`);
 
   return (
-    <div style={styles.page}>
-      {/* Left Sidebar */}
-      <aside style={styles.sidebar} aria-label="Categories Sidebar">
-        <div style={styles.sidebarHeading}>Categories</div>
-
-        <nav style={styles.sideNav} aria-label="Categories Navigation">
-          {/* All Categories */}
+    <div className="dashboard-page">
+      <aside className="sidebar">
+        <div className="sidebar-heading">Categories</div>
+        <nav className="side-nav">
           <CategoryButton
             name="All Categories"
             isSelected={!selectedCategory}
             onClick={() => setSelectedCategory(null)}
           />
-
-          {/* Dynamically list categories */}
-          {categories.length === 0 ? (
-            <div style={{ color: "#9ca3af", marginTop: 6 }}>
-              No categories yet
-            </div>
+          {loadingCategories ? (
+            <div className="empty-text">Loading categories...</div>
+          ) : categories.length === 0 ? (
+            <div className="empty-text">No categories yet</div>
           ) : (
-            categories.map((cat) => (
-              <CategoryButton
-                key={cat._id || cat.id || cat.name}
-                name={cat.name || "Unnamed"}
-                isSelected={selectedCategory === (cat._id || cat.id)}
-                onClick={() => setSelectedCategory(cat._id || cat.id)}
-              />
-            ))
+            categories.map((cat) => {
+              const id = getId(cat);
+              return (
+                <CategoryButton
+                  key={id || cat.name}
+                  name={cat.name || "Unnamed"}
+                  isSelected={selectedCategory === id}
+                  onClick={() => setSelectedCategory(id)}
+                />
+              );
+            })
           )}
         </nav>
       </aside>
 
-      {/* Main Content */}
-      <main style={styles.main}>
-        {/* TOP BAR: Logout (left), Title (center), Greeting (right)
-            The title is intentionally placed between the Logout button and the greeting
-            per your request: "add a header or title in between the logout button and
-            the greeting on top of the page that says Instruments For Dummies"
-        */}
-        <div style={styles.topRow}>
-          <div style={styles.topThreeCols}>
-            {/* Left column: Logout button */}
-            <div style={styles.topColLeft}>
-              <button onClick={handleLogout} style={styles.logoutButton}>
-                Logout
-              </button>
-            </div>
-
-            {/* Center column: THE TITLE - between Logout and Greeting */}
-            <div style={styles.topColCenter}>
-              <h1 style={styles.title}>🎵 Instruments For Dummies</h1>
-            </div>
-
-            {/* Right column: Greeting */}
-            <div style={styles.topColRight}>
-              {username ? (
-                <div style={styles.greeting}>Hello, {username}!</div>
-              ) : (
-                <div style={{ color: "#9ca3af" }}>Not logged in</div>
-              )}
-            </div>
+      <main className="main-content">
+        <div className="top-row">
+          <div
+            style={{ flex: 1, display: "flex", justifyContent: "flex-start" }}
+          >
+            <button className="logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
+          <div style={{ flex: 1, display: "flex", justifyContent: "center" }}>
+            <h1 className="page-title">🎵 Instruments For Dummies</h1>
+          </div>
+          <div style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>
+            {username ? (
+              <div className="greeting">Hello, {username}!</div>
+            ) : (
+              <div className="greeting" style={{ color: "#9ca3af" }}>
+                Not logged in
+              </div>
+            )}
           </div>
         </div>
 
-        {/* Secondary row: Dashboard heading + Create button */}
-        <div style={styles.dashboardHeadingRow}>
-          <h2 style={{ margin: 0 }}>Dashboard</h2>
+        <div className="dashboard-heading-row">
+          <h2>Dashboard</h2>
           <button
+            className="create-btn"
             onClick={() => setShowCreateForm((s) => !s)}
-            style={styles.createBtn}
           >
             {showCreateForm ? "Cancel" : "+ Create Question"}
           </button>
         </div>
 
-        {/* Summary / status */}
-        <p style={styles.smallMuted}>
+        <p className="small-muted">
           {selectedCategory
             ? `Showing ${filteredQuestions.length} question(s) in ${
-                categories.find(
-                  (c) => c._id === selectedCategory || c.id === selectedCategory
-                )?.name || "selected category"
+                categories.find((c) => getId(c) === selectedCategory)?.name ||
+                "selected category"
               }`
             : `Showing all ${questions.length} questions`}
         </p>
 
-        {/* Create form */}
         {showCreateForm && (
-          <section
-            style={styles.createFormCard}
-            aria-label="Create question form"
-          >
-            <h3 style={{ marginTop: 0 }}>Create New Question</h3>
-
+          <section id="create-question-form" className="create-form-card">
+            <h3>Create New Question</h3>
             <form onSubmit={handleCreateQuestion}>
-              <div style={{ marginBottom: 12 }}>
-                <label style={styles.formLabel}>Title</label>
-                <input
-                  style={styles.input}
-                  type="text"
-                  value={newQuestion.title}
-                  onChange={(e) =>
-                    setNewQuestion((prev) => ({
-                      ...prev,
-                      title: e.target.value,
-                    }))
-                  }
-                  placeholder="Short, descriptive question title"
-                  required
-                />
-              </div>
-
-              <div style={{ marginBottom: 12 }}>
-                <label style={styles.formLabel}>Category</label>
-                <select
-                  style={styles.input}
-                  value={newQuestion.category}
-                  onChange={(e) =>
-                    setNewQuestion((prev) => ({
-                      ...prev,
-                      category: e.target.value,
-                    }))
-                  }
-                  required
-                >
-                  <option value="">Select a category</option>
-                  {categories.map((cat) => (
-                    <option
-                      key={cat._id || cat.id || cat.name}
-                      value={cat._id || cat.id}
-                    >
-                      {cat.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div style={{ marginBottom: 16 }}>
-                <label style={styles.formLabel}>Question Details</label>
-                <textarea
-                  style={styles.textarea}
-                  value={newQuestion.body}
-                  onChange={(e) =>
-                    setNewQuestion((prev) => ({
-                      ...prev,
-                      body: e.target.value,
-                    }))
-                  }
-                  placeholder="Add more context, code snippets, or examples..."
-                  required
-                />
-              </div>
-
-              <div>
-                <button type="submit" style={styles.submitBtn}>
-                  Submit Question
-                </button>
-              </div>
+              <label className="form-label" htmlFor="q-title">
+                Title
+              </label>
+              <input
+                id="q-title"
+                className="input-field"
+                type="text"
+                value={newQuestion.title}
+                onChange={(e) =>
+                  setNewQuestion((p) => ({ ...p, title: e.target.value }))
+                }
+                placeholder="Short, descriptive title"
+                required
+              />
+              <label className="form-label" htmlFor="q-category">
+                Category
+              </label>
+              <select
+                id="q-category"
+                className="select-field input-field"
+                value={newQuestion.category}
+                onChange={(e) =>
+                  setNewQuestion((p) => ({ ...p, category: e.target.value }))
+                }
+                required
+              >
+                <option value="">Select category</option>
+                {categories.map((cat) => (
+                  <option key={getId(cat) || cat.name} value={getId(cat)}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+              <label className="form-label" htmlFor="q-body">
+                Question Details
+              </label>
+              <textarea
+                id="q-body"
+                className="textarea-field"
+                value={newQuestion.body}
+                onChange={(e) =>
+                  setNewQuestion((p) => ({ ...p, body: e.target.value }))
+                }
+                placeholder="Add context or details"
+                required
+              />
+              <button type="submit" className="submit-btn">
+                Submit Question
+              </button>
             </form>
           </section>
         )}
 
-        {/* Questions list */}
-        <section aria-label="Questions list" style={{ marginTop: 6 }}>
-          <div style={styles.questionsList}>
-            {filteredQuestions.length === 0 ? (
-              <div style={{ color: "#9ca3af" }}>
-                No questions in this category.
-              </div>
-            ) : (
-              filteredQuestions.map((question) => (
-                <QuestionCard
-                  key={question._id || question.id || question.title}
-                  question={{
-                    ...question,
-                    categoryName:
-                      categories.find(
-                        (c) =>
-                          c._id === question.category ||
-                          c.id === question.category
-                      )?.name ||
-                      question.categoryName ||
-                      "",
-                  }}
-                  onOpen={openQuestion}
-                  isHovered={
-                    hoveredQuestionId === (question._id || question.id)
-                  }
-                  onEnter={handleCardEnter}
-                  onLeave={handleCardLeave}
-                />
-              ))
-            )}
-          </div>
+        <section className="questions-list">
+          {loadingQuestions ? (
+            <div className="empty-text">Loading questions...</div>
+          ) : filteredQuestions.length === 0 ? (
+            <div className="empty-text">No questions in this category.</div>
+          ) : (
+            filteredQuestions.map((question) => (
+              <QuestionCard
+                key={getId(question) || question.title}
+                question={{
+                  ...question,
+                  categoryName:
+                    question.categoryName ||
+                    categories.find(
+                      (c) =>
+                        getId(c) === (question.category ?? question.categoryId)
+                    )?.name ||
+                    "",
+                }}
+                onOpen={openQuestion}
+                isHovered={
+                  hoveredQuestionId ===
+                  (getId(question) || question._id || question.id)
+                }
+                onEnter={handleCardEnter}
+                onLeave={handleCardLeave}
+              />
+            ))
+          )}
         </section>
-
-        {/* Extra spacer at bottom so things aren't cramped */}
         <div style={{ height: 60 }} />
       </main>
     </div>

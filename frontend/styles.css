@@ -125,8 +125,7 @@
   color: #ffd166;
 }
 
-/*Registration stylings*/
-/* === REGISTRATION PAGE === */
+/*Registration Stylings*/
 .register-container {
   min-height: 100vh;
   display: flex;
@@ -163,7 +162,6 @@
   margin-bottom: 2rem;
 }
 
-/* === FORM === */
 .register-form {
   display: flex;
   flex-direction: column;
@@ -187,7 +185,6 @@
   box-shadow: 0 0 0 3px rgba(0, 176, 155, 0.3);
 }
 
-/* === BUTTON === */
 .register-btn {
   background: linear-gradient(135deg, #56ab2f, #a8e063);
   border: none;
@@ -210,7 +207,6 @@
   cursor: not-allowed;
 }
 
-/* === FOOTER === */
 .register-footer {
   margin-top: 1.5rem;
   font-size: 0.9rem;
@@ -226,4 +222,452 @@
 
 .register-footer span:hover {
   color: #ffd166;
+}
+
+/*Dashboard Stylings*/
+/* ====== GLOBAL RESET ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.5;
+}
+
+/* ====== LAYOUT ====== */
+.dashboard-page {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ====== SIDEBAR ====== */
+.sidebar {
+  width: 260px;
+  background-color: #111827;
+  color: #f9fafb;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  border-bottom: 2px solid #1f2937;
+  padding-bottom: 0.5rem;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+/* ====== CATEGORY BUTTONS ====== */
+.category-btn {
+  background: #1f2937;
+  border: none;
+  color: #d1d5db;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.category-btn:hover {
+  background: #374151;
+  color: #fff;
+}
+
+.category-btn.selected {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+}
+
+/* ====== MAIN CONTENT ====== */
+.main-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+/* ====== TOP ROW ====== */
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+.greeting {
+  font-weight: 600;
+  color: #374151;
+}
+
+/* ====== DASHBOARD HEADER ====== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+body {
+  background-color: #f9fafb;
+  color: #111827;
+  line-height: 1.5;
+}
+
+.dashboard-page {
+  display: flex;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 260px;
+  background-color: #111827;
+  color: #f9fafb;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-heading {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  text-align: center;
+  border-bottom: 2px solid #1f2937;
+  padding-bottom: 0.5rem;
+}
+
+.side-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+
+.category-btn {
+  background: #1f2937;
+  border: none;
+  color: #d1d5db;
+  padding: 0.7rem 1rem;
+  border-radius: 0.5rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-weight: 500;
+}
+
+.category-btn:hover {
+  background: #374151;
+  color: #fff;
+}
+
+.category-btn.selected {
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
+}
+
+.main-content {
+  flex: 1;
+  padding: 1.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.top-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.page-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: #111827;
+}
+
+.logout-btn {
+  background-color: #ef4444;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+.logout-btn:hover {
+  background-color: #dc2626;
+}
+
+.greeting {
+  font-weight: 600;
+  color: #374151;
+}
+
+.dashboard-heading-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-heading-row h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.create-btn {
+  background-color: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.1s ease;
+}
+
+.create-btn:hover {
+  background-color: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.small-muted {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 1rem;
+}
+
+.create-form-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  animation: slideDown 0.4s ease forwards;
+}
+
+@keyframes slideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-label {
+  display: block;
+  font-weight: 600;
+  margin-top: 0.8rem;
+  margin-bottom: 0.3rem;
+  color: #374151;
+}
+
+.input-field,
+.textarea-field,
+.select-field {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border 0.25s ease, box-shadow 0.25s ease;
+}
+
+.input-field:focus,
+.textarea-field:focus,
+.select-field:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.textarea-field {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.submit-btn {
+  margin-top: 1rem;
+  background-color: #16a34a;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.25s ease, transform 0.1s ease;
+}
+
+.submit-btn:hover {
+  background-color: #15803d;
+  transform: translateY(-1px);
+}
+
+.questions-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.question-card {
+  background: linear-gradient(145deg, #e0ecff, #ffffff);
+  border: 1px solid #c7d2fe;
+  border-radius: 16px;
+  padding: 1.2rem 1.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.question-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.08) 0%,
+    transparent 60%
+  );
+  transform: scale(0);
+  transition: transform 0.4s ease;
+  z-index: 0;
+}
+
+.question-card:hover::before {
+  transform: scale(1);
+}
+
+.question-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.15);
+}
+
+.question-card h3 {
+  position: relative;
+  z-index: 1;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  margin-bottom: 0.4rem;
+}
+
+.question-card p {
+  position: relative;
+  z-index: 1;
+  color: #374151;
+}
+
+.meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.7rem;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.empty-text {
+  text-align: center;
+  color: #9ca3af;
+  font-style: italic;
+  margin: 2rem 0;
+}
+
+.side-nav::-webkit-scrollbar,
+.main-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.side-nav::-webkit-scrollbar-thumb,
+.main-content::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 4px;
+}
+
+.side-nav::-webkit-scrollbar-thumb:hover,
+.main-content::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+@media (max-width: 850px) {
+  .dashboard-page {
+    flex-direction: column;
+  }
+  .sidebar {
+    width: 100%;
+    flex-direction: row;
+    overflow-x: auto;
+    white-space: nowrap;
+    justify-content: flex-start;
+  }
+  .side-nav {
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+  .category-btn {
+    flex-shrink: 0;
+  }
+  .main-content {
+    padding: 1rem;
+  }
+  .page-title {
+    font-size: 1.2rem;
+  }
 }
