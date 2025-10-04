@@ -2,12 +2,10 @@ import { useState } from "react";
 import api from "../lib/axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router";
+import "../../styles.css";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
@@ -19,16 +17,16 @@ const Login = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault(); // prevent page reload
+    e.preventDefault();
     setLoading(true);
 
     try {
-      const res = await api.post("/users/login", formData); // adjust endpoint if needed
+      const res = await api.post("/users/login", formData);
 
       if (res.status === 201 || res.status === 200) {
         toast.success("Login successful!");
         localStorage.setItem("username", formData.username);
-        setFormData({ username: "", password: "" }); // reset form
+        setFormData({ username: "", password: "" });
         navigate("/dashboard");
       } else {
         toast.error(res.data?.message || "Something went wrong.");
@@ -42,40 +40,47 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <div className="max-w-7xl mx-auto p-4 mt-6">
-        <h2>Login</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={formData.username}
-            onChange={handleChange}
-            className="input input-bordered w-full"
-            required
-          />
+    <div className="login-container">
+      <div className="login-card">
+        <h2 className="login-title">Welcome Back 👋</h2>
+        <p className="login-subtitle">Log in to access your dashboard</p>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={formData.password}
-            onChange={handleChange}
-            className="input input-bordered w-full"
-            required
-          />
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-group">
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
 
-          <button
-            type="submit"
-            className="btn btn-primary w-full"
-            disabled={loading}
-          >
+          <div className="form-group">
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <button type="submit" className="login-btn" disabled={loading}>
             {loading ? "Logging in..." : "Log in"}
           </button>
         </form>
+
+        <div className="login-footer">
+          <p>
+            Don't have an account? <a href="/register">Register</a>
+          </p>
+        </div>
       </div>
     </div>
   );
 };
+
 export default Login;
