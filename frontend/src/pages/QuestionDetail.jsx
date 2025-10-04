@@ -1,4 +1,3 @@
-// pages/QuestionDetail.jsx
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
@@ -26,7 +25,6 @@ export default function QuestionDetail() {
       );
 
       if (response.ok) {
-        // Refresh question to show new answer
         const updated = await fetch(
           `http://localhost:5001/api/questions/${id}`
         ).then((r) => r.json());
