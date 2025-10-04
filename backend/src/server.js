@@ -6,8 +6,9 @@ import dotenv from "dotenv";
 import path from "path";
 import noteRoutes from "./routes/noteRoutes.js";
 import { connectDB } from "./config/db.js";
-import rateLimiter from "./middleware/rateLimiter.js";
 import userRoutes from "./routes/userRoutes.js";
+import questionRoutes from "./routes/questionRoutes.js";
+import categoryRoutes from "./routes/categoryRoutes.js";
 
 dotenv.config();
 
@@ -30,6 +31,8 @@ app.use(express.json());
 
 app.use("/api/notes", noteRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/questions", questionRoutes);
+app.use("/api/categories", categoryRoutes);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/dist")));

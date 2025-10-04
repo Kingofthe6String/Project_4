@@ -1,5 +1,16 @@
 import mongoose from "mongoose";
 
+const answerSchema = new mongoose.Schema({
+  body: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const questionSchema = new mongoose.Schema(
   {
     title: {
@@ -16,13 +27,10 @@ const questionSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    answers: [answerSchema],
     answered: {
       type: Boolean,
       default: false,
-    },
-    answer: {
-      type: String,
-      default: "",
     },
   },
   { timestamps: true }
