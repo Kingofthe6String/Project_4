@@ -12,12 +12,6 @@ npm run dev
 
 **Instruments For Dummies** is a web application that allows users to post, categorize, and answer questions about musical instruments. It features a clean, interactive dashboard with dynamic categories, colorful question cards, and an intuitive interface for creating and viewing questions. User authentication provides personalized greetings and session management.
 
----
-
-**Instruments For Dummies** is a web application that allows users to post, categorize, and answer questions about musical instruments. It features a clean, interactive dashboard with dynamic categories, colorful question cards, and an intuitive interface for creating and viewing questions. User authentication provides personalized greetings and session management.
-
----
-
 ## Usage
 
 1. Register a new account or log in with an existing user.
