@@ -2,7 +2,7 @@
 
 ## Overview
 
-## How to Run the App
+**How to Run the App**
 
 To start the application, open your terminal and run the following command:
 
