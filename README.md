@@ -2,14 +2,6 @@
 
 ## Overview
 
-## How to Run the App
-
-To start the application, open your terminal and run the following command:
-
-npm run dev
-
-⚠️ Note: The script has been updated in the package.json file, so "npm start" will no longer work. Make sure to use "npm run dev" to launch the app in development mode.
-
 **Instruments For Dummies** is a web application that allows users to post, categorize, and answer questions about musical instruments. It features a clean, interactive dashboard with dynamic categories, colorful question cards, and an intuitive interface for creating and viewing questions. User authentication provides personalized greetings and session management.
 
 ---
